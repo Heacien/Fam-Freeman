@@ -1,6 +1,4 @@
 @name httpRequest
-@inputs 
-@outputs 
 @persist HTTP
 
 # To run the expression when a request finishes
