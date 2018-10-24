@@ -1,3 +1,17 @@
-asdf
+@name httpRequest
+@inputs 
+@outputs 
+@persist HTTP
 
-asdf
+if (!HTTP & httpCanRequest()) {
+	HTTP = 1
+}
+
+if (HTTP == 1) { 
+	httpRequest("https://raw.githubusercontent.com/Heacien/Fam-Freeman/master/httpRequest")
+	HTTP = 2
+} 
+
+if (httpClk() & HTTP == 2) { 
+	fileWrite(">e2shared/httpRequest.txt", httpData()) 
+}
