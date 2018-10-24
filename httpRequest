@@ -3,15 +3,21 @@
 @outputs 
 @persist HTTP
 
-if (!HTTP & httpCanRequest()) {
-	HTTP = 1
-}
+# To run the expression when a request finishes
+runOnHTTP(1)
 
-if (HTTP == 1) { 
-	httpRequest("https://raw.githubusercontent.com/Heacien/Fam-Freeman/master/httpRequest")
-	HTTP = 2
+# If it's the first run and you can make a new request
+if (!HTTP & httpCanRequest()) {
+    print("Getting the code")
+    HTTP = 1
+    # Starts a new request
+    httpRequest("https://raw.githubusercontent.com/Heacien/Fam-Freeman/master/httpRequest")
 } 
 
-if (httpClk() & HTTP == 2) { 
-	fileWrite(">e2shared/httpRequest.txt", httpData()) 
+# If a completed request was run 
+if (httpClk() & HTTP == 1) { 
+    print("Saving the code")
+    HTTP = 2
+    # Writes string data to the file (overwriting it)
+    fileWrite(">e2shared/httpRequest.txt", httpData()) 
 }
